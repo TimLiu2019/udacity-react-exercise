@@ -3,7 +3,7 @@ import MovieCard from "./MovieCard";
 class Dashboard extends Component {
   render() {
     const { usersByMovie, users, movies } = this.props;
-
+     console.log('userbymovie',usersByMovie);
     const movieCards = Object.keys(movies).map(id => (
       <MovieCard
         key={id}
