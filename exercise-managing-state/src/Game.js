@@ -37,6 +37,7 @@ class Game extends Component {
     const newValuesArray = this.makeNewQuestion();
     this.updateState(newValuesArray);
     const answerWasCorrect = this.evaluateAnswer(event.target.name);
+    console.log('answer: ',event.target.name )
     this.props.handleAnswer(answerWasCorrect);
   };
 
