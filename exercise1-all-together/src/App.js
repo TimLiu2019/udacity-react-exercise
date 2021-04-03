@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import AddUser from "./AddUser";
+import UserList from "./UserList";
 
 class App extends Component {
   constructor(props) {
@@ -27,7 +28,8 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">ReactND - Coding Practice</h1>
         </header>
-        <AddUser  onAddUser = {this.addUser} />
+        <AddUser  onAddUser = {this.addUser}  users={this.state.users} />
+        <UserList users = {this.state.users} />
       </div>
     );
   }
