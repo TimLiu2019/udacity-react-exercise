@@ -49,13 +49,29 @@ function todos(state = [], action) {
   }
 }
 
-const store = createStore(todos);
+function goals(state = [], action) {
+  switch (action.type) {
+    case "ADD_GOAL":
+      return state.concat([action.goal]);
+    case "REMOVE_GOAL":
+      return state.filter(goal => goal.id != action.id);
+    default:
+      return state;
+  }
+}
 
-store.subscribe(() => {
-  console.log("The new state is: ", store.getState());
+const store1 = createStore(todos);
+const store2 = createStore(goals);
+
+store1.subscribe(() => {
+  console.log("The new state is: ", store1.getState());
 });
 
-store.dispatch({
+store2.subscribe(() => {
+    console.log("The new state is: ", store2.getState());
+  });
+
+store1.dispatch({
   type: "ADD_TODO",
   todo: {
     id: 0,
@@ -63,3 +79,12 @@ store.dispatch({
     complete: false
   }
 });
+
+store2.dispatch({
+    type: "ADD_GOAL",
+    goal: {
+      id: 0,
+      name: "Learn front end",
+      complete: false
+    }
+  });
