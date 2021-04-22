@@ -161,7 +161,12 @@
         const store = createStore(app);
 
         store.subscribe(() => {
-          console.log("The new state is: ", store.getState());
+          //console.log("The new state is: ", store.getState());
+          const {goals, todos} = store.getState();
+          document.getElementById('goals').innerHTML = '';
+          document.getElementById('todos').innerHTML = '';
+          goals.forEach(addGoalToDom);
+          todos.forEach(addTodoToDom);
         });
 
         function addTodo(){
@@ -190,7 +195,23 @@
         .addEventListener('click', addTodo)
 
         document.getElementById('goalBtn')
-        .addEventListener('click', addGoal)
+        .addEventListener('click', addGoal);
+
+        function addTodoToDom(todo){
+          const node = document.createElement('li');
+          const text = document.createTextNode(todo.name);
+          node.appendChild(text);
+          document.getElementById('todos')
+          .appendChild(node);
+        }
+
+        function addGoalToDom(goal){
+          const node = document.createElement('li');
+          const text = document.createTextNode(goal.name);
+          node.appendChild(text);
+          document.getElementById('goals')
+          .appendChild(node);
+        }
         // store.dispatch({
         //   type: ADD_TODO,
         //   todo: {
