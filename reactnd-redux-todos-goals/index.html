@@ -213,8 +213,18 @@
       // middleware new goal added
       const newGoalAdded = store => next => action => {
         if (action.type === ADD_GOAL) {
-          console.log("type is", action.type);
+       //   console.log("type is", action.type);
           alert("That's a great goal!");
+          return next(action);
+        }
+        return next(action);
+      };
+
+      // middleware new todo added
+      const newTodoAdded = store => next => action => {
+        if (action.type === ADD_TODO) {
+          console.log("todo is " + action.todo.name);
+          alert("Don't forget to" + action.todo.name);
           return next(action);
         }
         return next(action);
@@ -225,7 +235,7 @@
           todos,
           goals
         }),
-        Redux.applyMiddleware(checker, logger, newGoalAdded)
+        Redux.applyMiddleware(checker, logger, newGoalAdded,newTodoAdded)
       );
 
       store.subscribe(() => {
