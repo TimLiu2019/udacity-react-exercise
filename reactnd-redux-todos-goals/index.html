@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Todos Goals</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.7.2/redux.min.js"></script>
-    <script src='https://unpkg.com/react@16.3.0-alpha.1/umd/react.development.js'></script>
-    <script src='https://unpkg.com/react-dom@16.3.0-alpha.1/umd/react-dom.development.js'></script>
-    <script src='https://unpkg.com/babel-standalone@6.15.0/babel.min.js'></script>
+    <script src="https://unpkg.com/react@16.3.0-alpha.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.3.0-alpha.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       rel="stylesheet"
@@ -48,7 +48,7 @@
     </div>
     <hr />
 
-    <div id='app'></div>
+    <div id="app"></div>
 
     <script type="text/javascript">
       // generateId
@@ -220,7 +220,7 @@
       // middleware new goal added
       const newGoalAdded = store => next => action => {
         if (action.type === ADD_GOAL) {
-       //   console.log("type is", action.type);
+          //   console.log("type is", action.type);
           alert("That's a great goal!");
           return next(action);
         }
@@ -242,7 +242,7 @@
           todos,
           goals
         }),
-        Redux.applyMiddleware(checker, logger, newGoalAdded,newTodoAdded)
+        Redux.applyMiddleware(checker, logger, newGoalAdded, newTodoAdded)
       );
 
       store.subscribe(() => {
@@ -367,54 +367,69 @@
 
       // store.dispatch(removeGoalAction(0));
     </script>
-     <script type='text/babel'>
-      function List (props) {
+    <script type="text/babel">
+      function List(props) {
         return (
           <ul>
             <li>LIST</li>
           </ul>
-        )
+        );
       }
- 
+
       class Todos extends React.Component {
+        addItem = e => {
+          e.preventDefault();
+          const name = this.input.value;
+          this.input.value = "";
+
+          this.props.store.dispatch(
+            addTodoAction({
+              name,
+              complete: false,
+              id: generateId()
+            })
+          );
+        };
         render() {
           return (
             <div>
-              TODOS
- 
+              <h1>Todo List</h1>
+              <input
+                type="text"
+                placeholder="Add Todo"
+                ref={input => (this.input = input)}
+              />
+              <button onClick={this.addItem}>Add Todo</button>
+
               <List />
             </div>
-          )
+          );
         }
       }
- 
+
       class Goals extends React.Component {
         render() {
           return (
             <div>
               GOALS
- 
               <List />
             </div>
-          )
+          );
         }
       }
- 
+
       class App extends React.Component {
         render() {
           return (
             <div>
-              <Todos />
+                <Todos store={this.props.store} />
               <Goals />
             </div>
-          )
+          );
         }
       }
- 
-      ReactDOM.render(
-        <App />,
-        document.getElementById('app')
-      )
+
+      ReactDOM.render( <App store={store}/>, document.getElementById("app"));
     </script>
   </body>
 </html>
