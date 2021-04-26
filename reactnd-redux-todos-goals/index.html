@@ -267,7 +267,10 @@
           goals,
           loading
         }),
-        Redux.applyMiddleware(checker, logger, newGoalAdded, newTodoAdded)
+        // with new new goal addes and new todo added
+        // Redux.applyMiddleware(checker, logger, newGoalAdded, newTodoAdded)
+        // without new new goal addes and new todo added
+        Redux.applyMiddleware(checker, logger)
       );
 
       store.subscribe(() => {
@@ -436,6 +439,11 @@
         };
         toggleItem = id => {
           this.props.store.dispatch(toggleTodoAction(id));
+
+          return API.saveTodoToggle(id).catch(() => {
+            this.props.store.dispatch(toggleTodoAction(id));
+            alert("An error occurred. Try again.");
+          });
         };
         render() {
           return (
